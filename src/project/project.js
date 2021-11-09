@@ -18,6 +18,9 @@ function projectValid(projectPath) {
 
 /* 通过 URI 获取 project 的路径 */
 async function projectGenPath(Uri) {
+    if (!Uri) {
+        return null;
+    }
     const projectPathUri = await uriHelper.uri2ProjectUri(Uri);
     let proejctPath;
     if (projectPathUri) {
@@ -28,6 +31,9 @@ async function projectGenPath(Uri) {
 
 /* 通过 URI 获取 project 的名称 */
 async function projectGenName(Uri) {
+    if (!Uri) {
+        return null;
+    }
     const projectPath = await projectGenPath(Uri);
     if (projectPath) {
         return path.basename(projectPath);
@@ -274,7 +280,7 @@ class Project {
         }
 
         /* 最后当 reproject 文件修改时，触发一下事件，从而更新 project 实例的 upload 参数 */
-        eventEngine.emit(`${this.name}.reproject.change`);
+        eventEngine.emit(`${this.name}.reproject.change`, false);
         return this;
     }
 
@@ -298,7 +304,7 @@ class Project {
     }
 
     /* 用户更改了工程目录下的 reproject 文件 */
-    async projectReprojectChangeEvent() {
+    async projectReprojectChangeEvent(updateConfiguration = true) {
         /* 分别读取 project 下的  .reproject 和 ACOINFO IDE workspace 下的 .remoteproject 文件 */
         const projectReFile = path.join(this.path, './.reproject');
         const realEvoWkReFile = path.join(path.dirname(this.path),
@@ -388,14 +394,16 @@ class Project {
             fileshow.push(file_str);
         });
 
-        let p = [];
-        await (ProjectUpload.update("AHost", this.uploadDev.devName, vscode.ConfigurationTarget.WorkspaceFolder));
-        await (ProjectUpload.update("AIp", this.uploadDev.ip, vscode.ConfigurationTarget.WorkspaceFolder));
-        await (ProjectUpload.update("BPort", Number(this.uploadDev.port), vscode.ConfigurationTarget.WorkspaceFolder));
-        await (ProjectUpload.update("CUser", this.uploadDev.user, vscode.ConfigurationTarget.WorkspaceFolder));
-        await (ProjectUpload.update("DPassword", this.uploadDev.password, vscode.ConfigurationTarget.WorkspaceFolder));
-        await (ProjectUpload.update("EFiles", fileshow, vscode.ConfigurationTarget.WorkspaceFolder));
-        await Promise.all(p);
+        if (updateConfiguration) {
+            let p = [];
+            p.push(ProjectUpload.update("AHost", this.uploadDev.devName, vscode.ConfigurationTarget.WorkspaceFolder));
+            p.push(ProjectUpload.update("AIp", this.uploadDev.ip, vscode.ConfigurationTarget.WorkspaceFolder));
+            p.push(ProjectUpload.update("BPort", this.uploadDev.port, vscode.ConfigurationTarget.WorkspaceFolder));
+            p.push(ProjectUpload.update("CUser", this.uploadDev.user, vscode.ConfigurationTarget.WorkspaceFolder));
+            p.push(ProjectUpload.update("DPassword", this.uploadDev.password, vscode.ConfigurationTarget.WorkspaceFolder));
+            p.push(ProjectUpload.update("EFiles", fileshow, vscode.ConfigurationTarget.WorkspaceFolder));
+            await Promise.all(p);
+        }
     }
 
     /* workspace 的环境变量发生了变化 */

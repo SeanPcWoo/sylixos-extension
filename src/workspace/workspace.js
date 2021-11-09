@@ -3,7 +3,6 @@ const vscode = require('vscode');
 const  {projectGenPath, projectGenName, Project} = require('../project/project');
 const {eventEngine, eventMange} = require('../workspace/eventEngine');
 const envMange = require('./envmange');
-const logHelper = require('../common/logHelper');
 
 let workspace = {
     projects:[],
@@ -41,8 +40,9 @@ let workspace = {
 
     /* 启动 Vsocde 时调用 */
     async worksapceInit() {
-        /* 这里加了一个符合 ACOINFO IDE 的配置：即双击才展开文件夹，单击选中文件夹 */
+        /* 这里加了符合 ACOINFO IDE 的配置：即双击才展开文件夹，单击选中文件夹； GBK 编码 */
         vscode.workspace.getConfiguration('workbench').update('tree.expandMode', 'doubleClick');
+        vscode.workspace.getConfiguration('files').update('encoding', "GBK");
 
         /* 初始化 workspace 的环境变量 */
         await envMange.workspaceEvnInit();

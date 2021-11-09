@@ -8,14 +8,19 @@ const uriHelper = {
         if (!uri) {
             // so triggered by a keybinding
             await vscode.commands.executeCommand('copyFilePath');
-            uri = await vscode.env.clipboard.readText();  
+            uri = await vscode.env.clipboard.readText();
 
             // see note below for parsing multiple files/folders
-            uri = vscode.Uri.file(uri);  
+            uri = vscode.Uri.file(uri);
         }
 
         /* 通过传进来的 uri 找到 workspace 里对用的最上层的文件夹 uri  */
-        return vscode.workspace.getWorkspaceFolder(uri).uri;
+        const res = vscode.workspace.getWorkspaceFolder(uri);
+        if (res) {
+            return res.uri;
+        } else {
+            return null;
+        }
     },
 }
 

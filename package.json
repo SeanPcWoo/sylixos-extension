@@ -4,6 +4,7 @@
   "description": "the sylixos extension in vscode",
   "publisher": "wupengcheng",
   "version": "0.0.1",
+  "repository": {"url": "https://github.com/SeanPcWoo/sylixos-extension.git"},
   "engines": {
     "vscode": "^1.61.2"
   },

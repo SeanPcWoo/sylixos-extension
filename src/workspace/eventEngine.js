@@ -1,6 +1,5 @@
 const eventCommonEnging = require('../common/eventEngine');
 const vscode = require('vscode');
-const workspace = require('./workspace');
 const path = require('path');
 const uriHelper = require('../utils/uriHelper');
 const logHelper = require('../common/logHelper');
@@ -43,7 +42,7 @@ const eventMange = {
                 /* 给每一个新导入的文件夹注册一个监听事件 */
                 vscode.workspace.createFileSystemWatcher(
                     new vscode.RelativePattern(folder, "Makefile")).onDidCreate(
-                        async uri => await workspace.importProject(await uriHelper.uri2ProjectUri1(uri)));
+                        async uri => await workspace.importProject(await uriHelper.uri2ProjectUri(uri)));
 
                 return true;
             });
@@ -84,7 +83,6 @@ const eventMange = {
 
     /* 事件处理函数的注册 */
     eventInit() {
-        vscode.workspace.createFileSystemWatcher();
         vscode.workspace.onDidChangeConfiguration(this.configurationChangeEvent);
         vscode.workspace.onDidChangeWorkspaceFolders(this.workspaceFoldersChangeEvent);
         vscode.workspace.onDidRenameFiles(this.fileRenameEvent);

@@ -6,11 +6,15 @@ const projectTaskUpdate = {
         let wktasks = vscode.workspace.getConfiguration('tasks').tasks;
         let update = false;
         let i = 0;
-        for (i = 0; i < wktasks.length; i++) {
-            if (wktasks[i].label == task.label) {
-                update = true;
-                break;
+        if (wktasks) {
+            for (i = 0; i < wktasks.length; i++) {
+                if (wktasks[i].label == task.label) {
+                    update = true;
+                    break;
+                }
             }
+        } else {
+            wktasks = [];
         }
 
         if (update) {
