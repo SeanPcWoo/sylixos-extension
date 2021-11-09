@@ -21,7 +21,7 @@
 # 使用说明
 
 
-sylixos 开发插件相对于 **RealEvo-IDE  **(_ACOINFO 的专业 SylixOS 开发 IDE_) 而言，保留了开发过程中必备常用的功能，大量不常用的内容被精简了，这些功能开发者可以在插件市场中选择自己需要的优秀插件实现。sylixos 插件的目的是为了借助 vscode 强大的生态环境，来优化您编码和阅读代码的体验，让您即使是开发嵌入式 SylixOS 代码，也能拥有跟开发 js、python 等一样的美的感受。若借助 sylixos 插件，在 vscode 环境下还能相对于 **RealEvo-IDE**，提升您的开发效率，那我将非常开心 ：）
+sylixos 开发插件相对于 **RealEvo-IDE**(_ACOINFO 的专业 SylixOS 开发 IDE_) 而言，保留了开发过程中必备常用的功能，大量不常用的内容被精简了，这些功能开发者可以在插件市场中选择自己需要的优秀插件实现。sylixos 插件的目的是为了借助 vscode 强大的生态环境，来优化您编码和阅读代码的体验，让您即使是开发嵌入式 SylixOS 代码，也能拥有跟开发 js、python 等一样的美的感受。若借助 sylixos 插件，在 vscode 环境下还能相对于 **RealEvo-IDE**，提升您的开发效率，那我将非常开心 ：）
 
 
 > **郑重说明：vscode sylixos 插件是一款免费开源的开发编码插件，其不提供 SylixOS 开发过程中的任何编译工具链等商业内容的支持！**
