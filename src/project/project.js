@@ -178,8 +178,11 @@ class Project {
             return this;
         }
 
+        /* base 工程只有一个 */
+        c_cpp_propeities.env.BaseProPath = c_cpp_propeities.env.BaseProPath[0];
+
         /* 获取编译器地址等内容 */
-        const baseProConfigMk = path.join(c_cpp_propeities.env.BaseProPath[0], "./config.mk");
+        const baseProConfigMk = path.join(c_cpp_propeities.env.BaseProPath, "./config.mk");
         let toolChainPrefix = await simpleMakefile.getArgumentFromMakefiles(baseProConfigMk, "TOOLCHAIN_PREFIX");
         if (toolChainPrefix.length > 0) {
             c_cpp_propeities.env.SylixOS_CompilerPath = toolChainHelper.toolChainGet(toolChainPrefix[0]);
@@ -196,6 +199,8 @@ class Project {
         }
 
         /* 更新 c_cpp_properties.json 文件内容 */
+        /* 在更新前，将 base 路径后缀加上 **，表明递归搜索 */
+        c_cpp_propeities.env.customIncludePath.push(path.join(c_cpp_propeities.env.BaseProPath, "/**"));
         const propertiesFile = path.join(this.path, '/.vscode/c_cpp_properties.json');
         jsonHelper.writeJson2File(propertiesFile, c_cpp_propeities);
 
