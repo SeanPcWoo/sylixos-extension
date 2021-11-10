@@ -3,8 +3,9 @@
   "displayName": "sylixos",
   "description": "the sylixos extension in vscode",
   "publisher": "wupengcheng",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {"url": "https://github.com/SeanPcWoo/sylixos-extension.git"},
+  "icon": "src/img/logo.jpg",
   "engines": {
     "vscode": "^1.61.2"
   },
@@ -75,17 +76,17 @@
 					"ProjectSetting.CustomBuildCmd": {
 						"type": "string",
 						"scope": "resource",
-						"description": "自定义 build 命令行, 默认编译命令为: make all"
+						"description": "自定�? build 命令�?, 默认编译命令�?: make all"
 					},
 					"ProjectSetting.CustomCleanCmd": {
 						"type": "string",
 						"scope": "resource",
-						"description": "自定义 clean 命令行, 默认编译命令为: make clean"
+						"description": "自定�? clean 命令�?, 默认编译命令�?: make clean"
 					}
 				}
 			},
       {
-        "title": "SylixOS 一键部署",
+        "title": "SylixOS 一键部�?",
         "properties": {
           "Upload.AHost": {
             "type": "string",
@@ -97,30 +98,30 @@
             "type": "string",
             "scope": "resource",
             "default": "",
-            "description": "设置一键部署设备 IP 地址"
+            "description": "设置一键部署设�? IP 地址"
           },
           "Upload.BPort": {
             "type": "number",
             "default": 0,
             "scope": "resource",
-            "description": "设置一键部署 FTP 主机端口"
+            "description": "设置一键部�? FTP 主机端口"
           },
           "Upload.CUser": {
             "type": "string",
             "default": "",
             "scope": "resource",
-            "description": "设置一键部署 FTP 主机用户名"
+            "description": "设置一键部�? FTP 主机用户�?"
           },
           "Upload.DPassword": {
             "type": "string",
             "default": "",
             "scope": "resource",
-            "description": "设置一键部署 FTP 主机密码"
+            "description": "设置一键部�? FTP 主机密码"
           },
           "Upload.EFiles": {
             "type": "array",
             "scope": "resource",
-            "description": "设置一键部署内容\n(格式 : local file > remote file, 如: ./Release/strip/demo1 > /apps/demo/demo)",
+            "description": "设置一键部署内容\n(格式 : local file > remote file, �?: ./Release/strip/demo1 > /apps/demo/demo)",
             "items": {
               "type": "string"
             },

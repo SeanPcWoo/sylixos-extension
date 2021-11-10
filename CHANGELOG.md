@@ -1,6 +1,6 @@
 # Change Log
 
-## [Unreleased] - 2021-11-9
+## [Released v0.0.1] - 2021-11-9
 ### Added
 - 支持工程导入与移除操作；
 - 支持与 RealEvoIDE workspace 下的工程 upload 属性无缝配置；
@@ -15,6 +15,16 @@
 
 ### Changed
 - 无
+
+### Removed
+- 无
+
+## [Released v0.0.2] - 2021-11-10
+### Added
+- 添加插件图标；
+
+### Changed
+- 将 makefiles 的 规则文件生成路径改为 .vscode 文件夹；
 
 ### Removed
 - 无
