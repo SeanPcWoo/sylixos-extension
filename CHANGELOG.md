@@ -25,6 +25,8 @@
 
 ### Changed
 - 将 makefiles 的 规则文件生成路径改为 .vscode 文件夹；
+- 只能 SylixOS 工程目录的文件设置为 gbk 编码；
+- tasks 添加 version 属性
 
 ### Removed
 - 无

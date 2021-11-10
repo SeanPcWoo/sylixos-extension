@@ -95,6 +95,8 @@ class Project {
                 }
             }
         }
+
+        vscode.workspace.getConfiguration('files', project.uri).update('encoding', "gbk");
         this.initFinish = true;
     }
 
