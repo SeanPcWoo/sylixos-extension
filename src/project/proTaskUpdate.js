@@ -14,7 +14,7 @@ const projectTaskUpdate = {
                 }
             }
         } else {
-            wktasks = [];
+            wktasks = [{version:"v2.0.0"}];
         }
 
         if (update) {
