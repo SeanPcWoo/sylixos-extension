@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const path = require('path');
 const ftpHelper = require('../utils/ftphelper');
-const  {projectGenPath, projectGenName, Project} = require('../project/project');
+const  {projectGenPath, projectGenName} = require('../project/project');
 const workspace = require('../workspace/workspace');
 
 const statusBar = require('../common/statusbar');

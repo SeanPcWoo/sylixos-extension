@@ -3,6 +3,7 @@ const vscode = require('vscode');
 const path = require('path');
 const uriHelper = require('../utils/uriHelper');
 const logHelper = require('../common/logHelper');
+const os = require('os');
 
 const eventEngine = new eventCommonEnging('SylixOSWorkspace');
 
@@ -10,6 +11,12 @@ const eventMange = {
     /* 当用户更改了工程配置后的事件处理函数 */
     configurationChangeEvent(event) {
         const projectGenName = require('../project/project').projectGenName;
+        if (event.affectsConfiguration('ProjectSetting.LinuxCompilePath')) {
+            if (os.type() == 'Linux') {
+                /* 只在 Linux 下才做对应的操作 */
+                eventEngine.emit('linux.compilepath.change');
+            }
+        }
         if (vscode.workspace.workspaceFolders !== undefined) {
             vscode.workspace.workspaceFolders.forEach(async (folder) => {
                 /* 工程设置属性发生的变化 */

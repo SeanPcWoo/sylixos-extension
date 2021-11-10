@@ -25,8 +25,27 @@
 
 ### Changed
 - 将 makefiles 的 规则文件生成路径改为 .vscode 文件夹；
-- 只能 SylixOS 工程目录的文件设置为 gbk 编码；
+
+### Removed
+- 无
+
+## [Released v0.0.3] - 2021-11-10
+### Added
+- 添加插件图标；
+
+### Changed
+- 只为 SylixOS 工程目录的文件设置 gbk 编码；
 - tasks 添加 version 属性
+
+### Removed
+- 无
+
+## [Released v0.0.4] - 2021-11-10
+### Added
+- 增加了对 Linux 下 vscode 的支持，在 Remote Development 环境下调试可用；
+
+### Changed
+- 修复了 tasks 配置失败的问题
 
 ### Removed
 - 无

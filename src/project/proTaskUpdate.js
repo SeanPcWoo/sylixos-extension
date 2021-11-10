@@ -3,36 +3,31 @@ const vscode = require('vscode');
 const projectTaskUpdate = {
     /* 更新一个工程的编译 task，如果 workspace 里没有此工程编译 task ，则新添加一个 */
     updateWorkSpaceTask(task) {
+        let templete = {version:'2.0.0', tasks:[]};
         let tasks = vscode.workspace.getConfiguration().tasks;
-        let wktasks;
+
         if (tasks) {
             if (tasks.tasks) {
-                wktasks = tasks.tasks;
-            } else {
-                wktasks = [];
+                templete.tasks = tasks.tasks;
             }
-        } else {
-            tasks = {version:"2.0.0", tasks:[]};
-            wktasks = tasks.tasks;
         }
 
         let update = false;
         let i;
-        for (i = 0; i < wktasks.length; i++) {
-            if (wktasks[i].label == task.label) {
+        for (i = 0; i < templete.tasks.length; i++) {
+            if (templete.tasks[i].label == task.label) {
                 update = true;
                 break;
             }
         }
 
         if (update) {
-            wktasks[i] = task;
+            templete.tasks[i] = task;
         } else {
-            wktasks.push(task);
+            templete.tasks.push(task);
         }
 
-        vscode.workspace.getConfiguration().update("tasks", tasks);
-        // vscode.workspace.getConfiguration('tasks').update("tasks", wktasks);
+        vscode.workspace.getConfiguration().update("tasks", templete);
 
         return task;
     },

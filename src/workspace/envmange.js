@@ -14,9 +14,7 @@ const envMange = {
 
     /* 获取 RealEvoIde 的 WORKSPACExx 变量内容 */
     async updaterealEvoEnv() {
-        toolChainHelper.toolChainRootPathUpdate();
         let configFile;
-
         if (toolChainHelper.realEvoIdePath) {
             configFile = path.join(toolChainHelper.realEvoIdePath, REALEVOIDE_WORKSPACE_FILE);
             let str = await simpleMakefile.getArgumentDefineInMk(configFile, "RECENT_WORKSPACES");
@@ -30,10 +28,13 @@ const envMange = {
         }
     },
 
-    /* workspace 环境变量初始化 */
+    /* workspace 环境变量初始化，包括获取编译器路径 */
     async workspaceEvnInit() {
+        toolChainHelper.toolChainInit();
         await this.updaterealEvoEnv();
         this.workspaceEnv = this.realEvoIdeEnv;
+
+        eventEngine.on('linux.compilepath.change', toolChainHelper.toolChainChangeInLinux);
     },
 
     /* 给 workspace 的环境变量添加一个元素 */

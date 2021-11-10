@@ -1,4 +1,4 @@
-const uriHelper = require('../utils/urihelper');
+const uriHelper = require('../utils/uriHelper');
 const path = require('path');
 const existsSync = require('fs').existsSync;
 const { eventEngine } = require('../workspace/eventEngine');
@@ -29,7 +29,7 @@ async function projectGenPath(Uri) {
     return projectValid(proejctPath) ? proejctPath : null;
 }
 
-/* 通过 URI 获取 project 的名称 */
+/* 通过 URI 获取 project 的路径 */
 async function projectGenName(Uri) {
     if (!Uri) {
         return null;
@@ -67,13 +67,13 @@ class Project {
         /* 更新工程环境变量 */
         await this.workspaceEnvChangeEvent();
 
-        /* 更新一下 reproject 的信息到 setting 中 */
+        /* 更新 reproject 的信息到 setting 中 */
         await this.projectReprojectChangeEvent();
 
         /* 更新一下由 Makefile 引发的相关内容 */
         await this.projectMkChangeEvent();
 
-        /* 更新编译相关的 task 内容 */
+        /* 更新编译相关 task 内容 */
         this.projectBuildChangeEvent();
     }
 
@@ -89,7 +89,7 @@ class Project {
                 let newEnv = {}
                 newEnv['WORKSPACE_' + project.name] = project.path;
                 Object.assign(this.env, newEnv);
-                /* 更新了 workspace 的环境变量后，再触发一下 mkfile 事件，从而更新相关智能分析的内容 */
+                /* 更新 workspace 的环境变量后，再触发一下 mkfile 事件，从而更新相关智能分析的内容 */
                 if (this.initFinish) {
                     eventEngine.emit(`${this.name}.makefile.change`);
                 }
@@ -108,7 +108,7 @@ class Project {
             } else {
                 /* 移除了另一个工程 */
                 delete this.env['WORKSPACE_' + projectName];
-                /* 更新了 workspace 的环境变量后，再触发一下 mkfile 事件，从而更新相关智能分析的内容 */
+                /* 更新 workspace 的环境变量后，再触发一下 mkfile 事件，从而更新相关智能分析的内容 */
                 if (this.initFinish) {
                     eventEngine.emit(`${this.name}.makefile.change`);
                 }
@@ -116,9 +116,9 @@ class Project {
         }
     }
 
-    /* 用户更改了工程目录 Makefile 相关文件 */
+    /* 用户更改了工程目录的 Makefile 相关文件 */
     async projectMkChangeEvent() {
-        /* 更新一下 debug lv 和 env */
+        /* 更新 debug lv 和 env */
         let configMk = path.join(this.path, "./config.mk");
         let lv = await simpleMakefile.getArgumentDefineInMk(configMk, "DEBUG_LEVEL");
         if (lv.length > 0) {
@@ -158,7 +158,7 @@ class Project {
             ]
         }
 
-        /* 更新一下 makefile 的规则文件 */
+        /* 更新 makefile 的规则文件 */
         if (this.type != 'SylixOSBaseProject' && this.type != 'unknown') {
             const rulesFile = path.join(this.path, '/.vscode/.mkrules');
             await makefileHelper.makefileRulesGet(rulesFile, false, this.env);
@@ -180,7 +180,7 @@ class Project {
             return this;
         }
 
-        /* base 工程只有一个 */
+        /* base 工程只有个 */
         c_cpp_propeities.env.BaseProPath = c_cpp_propeities.env.BaseProPath[0];
 
         /* 获取编译器地址等内容 */
@@ -209,7 +209,7 @@ class Project {
         return this;
     }
 
-    /* 用户更改了 upload 的设置 */
+    /* 用户更改 upload 的设置 */
     async projectUploadChangeEvent() {
         /* 分别读取 project 下的  .reproject 和 ACOINFO IDE workspace 下的 .remoteproject 文件 */
         const projectReFile = path.join(this.path, './.reproject');
@@ -235,7 +235,7 @@ class Project {
             /* 写入 files 信息 */
             let PairItem = ProjectUpload.EFiles.map(uploadRule => {
                 let file = { $: {} };
-                /* 通过 ‘>’ 符号拆分出 local 文件和 remote 文件，并且去除空格 */
+                /* 通过 > 符号拆分 local 文件和 remote 文件，并且去除空格 */
                 file.$.key = path.normalize(uploadRule.split('>')[0].replace(/\s*/g, ""));
                 file.$.value = uploadRule.split('>')[1].replace(/\s*/g, "");
                 return file;
@@ -249,7 +249,7 @@ class Project {
             xmlHelper.setXmlContent2File(projectReFile, ReFileContent);
         }
 
-        /* 尝试将对应的内容写入 ACOINFO IDE 的 workspace 的配置文件 */
+        /* 尝试将对应的内容写入 ACOINFO IDE 和 workspace 的配置文件 */
         if (WkReFileContent && WkReFileContent.remotesystem.Remote) {
             let remotes = WkReFileContent.remotesystem.Remote;
             if (remotes.length == undefined) {
@@ -258,7 +258,7 @@ class Project {
 
             let index = remotes.findIndex(dev => dev.$.DeviceID == ProjectUpload.AHost);
             if (index == -1) {
-                /* 没有找到则添加一个元素 */
+                /* 没有找到则添加一个元素? */
                 remotes.push({
                     $: {
                         DeviceID: ProjectUpload.AHost,
@@ -266,7 +266,7 @@ class Project {
                         FTPProt: Number(ProjectUpload.BPort),
                         UserName: ProjectUpload.CUser,
                         UserPassword: ProjectUpload.DPassword,
-                        /* 这是默认值 */
+                        /* 这是默认信息 */
                         DeviceProt: "23",
                         GDBProt: "1234"
                     }
@@ -286,12 +286,12 @@ class Project {
             xmlHelper.setXmlContent2File(realEvoWkReFile, WkReFileContent);
         }
 
-        /* 最后当 reproject 文件修改时，触发一下事件，从而更新 project 实例的 upload 参数 */
+        /* 最后当 reproject 文件修改时，触发一下事件，从而更新 project 实例和 upload 参数 */
         eventEngine.emit(`${this.name}.reproject.change`, false);
         return this;
     }
 
-    /* 用户更改了 build 的设置 */
+    /* 用户更改 build 的设置 */
     projectBuildChangeEvent() {
         let ProjectSetting = vscode.workspace.getConfiguration('ProjectSetting', this.uri);
 
@@ -310,7 +310,7 @@ class Project {
         projectTaskUpdate.updateProjectTask(this);
     }
 
-    /* 用户更改了工程目录下的 reproject 文件 */
+    /* 用户更改了工程目录下 reproject 文件 */
     async projectReprojectChangeEvent(updateConfiguration = true) {
         /* 分别读取 project 下的  .reproject 和 ACOINFO IDE workspace 下的 .remoteproject 文件 */
         const projectReFile = path.join(this.path, './.reproject');
@@ -338,7 +338,7 @@ class Project {
         /* 获取 remote dev 的信息 */
         if (ReFileContent && ReFileContent.SylixOSSetting.DeviceSetting) {
             this.uploadDev.devName = ReFileContent.SylixOSSetting.DeviceSetting.$;
-            /* 查找 ACOIFNO IDE 的 workspace 的配置内容，看是否由这个 dev 的配置信息 */
+            /* 查找 ACOIFNO IDE 和 workspace 的配置内容，看是否由这个 dev 的配置信息 */
             if (WkReFileContent && WkReFileContent.remotesystem.Remote) {
                 let remotes = WkReFileContent.remotesystem.Remote;
                 if (remotes.length == undefined) {
@@ -357,7 +357,7 @@ class Project {
 
         if (this.uploadDev.ip == '') {
             /* 说明从工程配置文件和 ACOINFO IDE 的配置中获取信息失败，
-               则使用 vscode 用户配置的内容作为 upload 的最终配置项目 */
+               则使用 vscode 用户配置的内容作为 upload 的最终配置项 */
             if (ProjectUpload) {
                 this.uploadDev.devName = ProjectUpload.AHost;
                 this.uploadDev.ip = ProjectUpload.AIp;
@@ -367,7 +367,7 @@ class Project {
             }
         }
 
-        /* 获取 ftp files 信息， ftp 的 files 根据就是工程的 reproject 文件 */
+        /* 获取 ftp files 信息和 ftp 的 files 根据就是工程的 reproject 文件 */
         this.uploadFiles = [];
         if (ReFileContent && ReFileContent.SylixOSSetting.UploadPath.PairItem) {
             let uploadFiles = ReFileContent.SylixOSSetting.UploadPath.PairItem;
@@ -380,13 +380,13 @@ class Project {
                             local: fileinfo.$.key,
                             remote: fileinfo.$.value,
                         };
-                        /* 替换本工程的 workspace 和  output */
+                        /* 替换本工程的 workspace 的  output */
                         file.local = file.local.replace(`$(WORKSPACE_${this.name})`, this.path);
                         file.local = file.local.replace(`$(Output)`, this.debuglv);
                         file.local = path.normalize(file.local);
                         /* 判断一下当前文件是否存在，如果不存在则提示用户 */
                         if (!existsSync(file.local)) {
-                            logHelper.logAppendLine(`未发现待 upload 的文件:[${file.local}], 请检查:${projectReFile}`);
+                            logHelper.logAppendLine(`未发现待 upload 的文�?:[${file.local}], 请检�?:${projectReFile}`);
                         }
                         this.uploadFiles.push(file);
                     }
@@ -394,7 +394,7 @@ class Project {
             }
         }
 
-        /* 将当前的信息展示在 configuration 中 */
+        /* 将当前的信息展示在 configuration  */
         let fileshow = [];
         this.uploadFiles.forEach(file => {
             let file_str = file.local + " > " + file.remote;
@@ -415,16 +415,16 @@ class Project {
 
     /* workspace 的环境变量发生了变化 */
     async workspaceEnvChangeEvent() {
-        /* 对于当前版本的 project 环境变量来说，主要由两部分构成： workspace 环境变量 + 本身工程的 ‘Output’环境变量 */
+        /* 对于当前版本的 project 环境变量来说，主要由两部分构成： workspace 环境变量 + 本身工程的 ‘Output’环境变化 */
         /* 获取 Output 环境变量值，即获取 Debug level */
         let env = envMange.workspaceEnv;
         Object.assign(env, { Output: this.debuglv });
         this.env = env;
 
-        /* 更新了 workspace 的环境变量后，再触发一下 mkfile 事件，从而更新相关智能分析的内容 */
+        /* 更新 workspace 的环境变量后，再触发一�? mkfile 事件，从而更新相关智能分析的内容 */
         if (this.initFinish) {
             eventEngine.emit(`${this.name}.makefile.change`);
-            /* 更新编译相关的 task 内容 */
+            /* 更新编译相关关 task 内容 */
             this.projectBuildChangeEvent();
         }
     }

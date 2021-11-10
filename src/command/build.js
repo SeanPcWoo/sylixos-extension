@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const  {projectGenPath, projectGenName, Project} = require('../project/project');
+const  {projectGenPath, projectGenName} = require('../project/project');
 const workspace = require('../workspace/workspace');
 
 async function buildSylixOSPro (uri) {
@@ -46,4 +46,4 @@ module.exports = function(context) {
     context.subscriptions.push(buildprocmd);
 	context.subscriptions.push(cleanprocmd);
     context.subscriptions.push(cleanbuildprocmd);
-} 
+}

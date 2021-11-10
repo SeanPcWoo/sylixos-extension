@@ -3,7 +3,7 @@
   "displayName": "sylixos",
   "description": "the sylixos extension in vscode",
   "publisher": "wupengcheng",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "repository": {"url": "https://github.com/SeanPcWoo/sylixos-extension.git"},
   "icon": "src/img/logo.jpg",
   "engines": {
@@ -13,7 +13,7 @@
     "Other"
   ],
   "activationEvents": [
-    "*"
+    "onStartupFinished"
   ],
   "main": "./extension.js",
   "contributes": {
@@ -73,6 +73,10 @@
       {
 				"title": "SylixOS 编译命令",
 				"properties": {
+          "ProjectSetting.LinuxCompilePath": {
+						"type": "string",
+						"description": "Linux 环境下的编译器路径，如果在 Windows 下使用，无需关心！"
+					},
 					"ProjectSetting.CustomBuildCmd": {
 						"type": "string",
 						"scope": "resource",
@@ -110,7 +114,7 @@
             "type": "string",
             "default": "",
             "scope": "resource",
-            "description": "设置一键部署 FTP 主机用户名?"
+            "description": "设置一键部署 FTP 主机用户名"
           },
           "Upload.DPassword": {
             "type": "string",

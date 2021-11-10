@@ -30,7 +30,7 @@ let workspace = {
     },
 
     async workspaceProjectInit() {
-        if (vscode.workspace.workspaceFolders.length > 0) {
+        if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
             let p = vscode.workspace.workspaceFolders.map(async folder => {
                 await this.importProject(folder.uri);
             });
