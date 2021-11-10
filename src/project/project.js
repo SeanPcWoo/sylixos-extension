@@ -158,7 +158,7 @@ class Project {
 
         /* 更新一下 makefile 的规则文件 */
         if (this.type != 'SylixOSBaseProject' && this.type != 'unknown') {
-            const rulesFile = path.join(this.path, '/.settings/.mkrules');
+            const rulesFile = path.join(this.path, '/.vscode/.mkrules');
             await makefileHelper.makefileRulesGet(rulesFile, false, this.env);
 
             let p1 = makefileHelper.getIncludeInfoWithFile(rulesFile);

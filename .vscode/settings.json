@@ -22,5 +22,6 @@
         "titleBar.inactiveForeground": "#e7e7e799"
     },
     "peacock.color": "#007fff",
-    "workbench.tree.expandMode": "doubleClick"
+    "workbench.tree.expandMode": "doubleClick",
+    "files.encoding": "GBK"
 }
