@@ -106,7 +106,8 @@ class Project {
     async projectRemoveEvent(projectName) {
         if (projectName != null) {
             if (projectName == this.name) {
-                /* 移除的是自己 */
+                /* 移除的是自己, 将 tasks 任务删除 */
+                projectTaskUpdate.deleteProjectTask(this);
             } else {
                 /* 移除了另一个工程 */
                 delete this.env['WORKSPACE_' + projectName];
