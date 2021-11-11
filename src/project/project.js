@@ -9,7 +9,6 @@ const makefileHelper = require('../utils/makefilehelper');
 const toolChainHelper = require('../utils/toolchainhelper');
 const jsonHelper = require('../utils/jsonhelper');
 const vscode = require('vscode');
-const projectTaskUpdate = require('./proTaskUpdate');
 const logHelper = require('../common/logHelper');
 
 function projectValid(projectPath) {
@@ -106,8 +105,7 @@ class Project {
     async projectRemoveEvent(projectName) {
         if (projectName != null) {
             if (projectName == this.name) {
-                /* 移除的是自己, 将 tasks 任务删除 */
-                projectTaskUpdate.deleteProjectTask(this);
+                /* 移除的是自己 */
             } else {
                 /* 移除了另一个工程 */
                 delete this.env['WORKSPACE_' + projectName];
@@ -294,6 +292,53 @@ class Project {
         return this;
     }
 
+    addNewTasks(tasksNew, newTaskLabel, newTaskCmd){
+        let newTask = {
+            label: "",
+            command: "",
+            type: "shell",
+            options: {
+                cwd: `${this.path}`,
+                env: {}
+            },
+            presentation: {
+                reveal: "always",
+                panel: "dedicated"
+            },
+            problemMatcher: {
+                owner: "cpp",
+                fileLocation: [
+                    "autoDetect", "${workspaceFolder}"
+                ],
+                pattern: {
+                    regexp: "^(.*):(\\d+):(\\d+):\\s+(warning|error|note):\\s+(.*)$",
+                    file: 1,
+                    line: 2,
+                    column: 3,
+                    severity: 4,
+                    message: 5
+                }
+            }
+        };
+
+        Object.assign(newTask.options.env, this.env);
+        newTask.label = newTaskLabel;
+        newTask.command = newTaskCmd;
+
+        let index = -1;
+        if (tasksNew.tasks) {
+            index = tasksNew.tasks.findIndex(task => task.label == newTaskLabel);
+        } else {
+            tasksNew.tasks = [];
+        }
+        
+        if (index != -1) {
+            tasksNew.tasks[index] = newTask;
+        } else {
+            tasksNew.tasks.push(newTask);
+        }
+    }
+
     /* 用户更改 build 的设置 */
     projectBuildChangeEvent() {
         let ProjectSetting = vscode.workspace.getConfiguration('ProjectSetting', this.uri);
@@ -310,7 +355,18 @@ class Project {
             this.cleanCmd = "make clean";
         }
 
-        projectTaskUpdate.updateProjectTask(this);
+        /* 更新 tasks.json 内容 */
+        const tasksFile = path.join(this.path, '/.vscode/tasks.json');
+        const tasksOld = jsonHelper.readJsonFromFile(tasksFile);
+        let tasksNew = {version:"2.0.0"};
+        if (tasksOld) {
+            Object.assign(tasksNew, tasksOld);
+        }
+
+        this.addNewTasks(tasksNew, `build ${this.name}`, `${this.buildCmd}`);
+        this.addNewTasks(tasksNew, `clean ${this.name}`, `${this.buildCmd}`);
+        this.addNewTasks(tasksNew, `clean&build ${this.name}`, `${this.buildCmd}`);
+        jsonHelper.writeJson2File(tasksFile, tasksNew);
     }
 
     /* 用户更改了工程目录下 reproject 文件 */
