@@ -61,3 +61,14 @@
 
 ### Removed
 - 无
+
+
+## [Released v0.0.6] - 2021-11-11
+### Added
+- 支持工程编译失败或者警告等情况下，筛选出错误内容，在 “问题” 标签栏显示，且支持点击直接跳转产生错误的代码处
+
+### Changed
+- 修改了 tasks 的内容保存位置，从 workspaces 的 setting 改为每一个工程的 .vscode;
+
+### Removed
+- 无
