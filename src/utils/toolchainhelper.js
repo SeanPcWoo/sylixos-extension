@@ -9,18 +9,6 @@ const toolChainHelper = {
     compileRootPath: null,
     realEvoIdePath: null,
 
-    /**
-     * 尝试获取编译器的根目录,如果获取失败,则会更新编译器根目录
-     */
-    // toolChainPathUpdate() {
-    //     let envPath = process.env.PATH.split(path.delimiter);
-    //     envPath.forEach(path => {
-    //         if ((path.indexOf("RealEvo") != -1) && (path.indexOf("compiler") != -1)) {
-    //             this.toolChainPath.push(path);
-    //         }
-    //     });
-    // },
-
     /* 根据编译器前缀，获取指定架构的编译工具链地址 */
     toolChainGet(toolChainPrefix) {
         if (this.toolChainPath.length == 0) {
@@ -86,14 +74,15 @@ const toolChainHelper = {
             for (let i = 0; i < envPath.length; i++) {
                 if ((envPath[i].indexOf("RealEvo") != -1) && (envPath[i].indexOf("compiler") != -1)) {
                     this.toolChainPath.push(envPath[i]);
-                    /* 通过环境变量找到了编译器根目录 */
-                    /* compilePath:  D:\\ACOINFO\\RealEvo\\compiler\\arm-none-toolchain\\bin */
-                    let compilePath = path.parse(envPath[i]);
-                    /* compilePath.dir:  D:\\ACOINFO\\RealEvo\\compiler\\arm-none-toolchain */
-                    let compileRootPath = path.normalize(path.dirname(compilePath.dir));
-                    this.compileRootPath = compileRootPath;
-                    this.realEvoIdePath = path.dirname(compileRootPath);
-                    return;
+                    if (!this.compileRootPath) {
+                        /* 通过环境变量找到了编译器根目录 */
+                        /* compilePath:  D:\\ACOINFO\\RealEvo\\compiler\\arm-none-toolchain\\bin */
+                        let compilePath = path.parse(envPath[i]);
+                        /* compilePath.dir:  D:\\ACOINFO\\RealEvo\\compiler\\arm-none-toolchain */
+                        let compileRootPath = path.normalize(path.dirname(compilePath.dir));
+                        this.compileRootPath = compileRootPath;
+                        this.realEvoIdePath = path.dirname(compileRootPath);
+                    }
                 }
             }
         } else if (os.type().indexOf('Linux') != -1) {

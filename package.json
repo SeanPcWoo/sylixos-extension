@@ -7,7 +7,7 @@
   "repository": {"url": "https://github.com/SeanPcWoo/sylixos-extension.git"},
   "icon": "src/img/logo.jpg",
   "engines": {
-    "vscode": "^1.61.2"
+    "vscode": "^1.60.0"
   },
   "categories": [
     "Other"
@@ -144,7 +144,7 @@
     "@types/glob": "^7.1.4",
     "@types/mocha": "^9.0.0",
     "@types/node": "14.x",
-    "@types/vscode": "^1.61.2",
+    "@types/vscode": "^1.60.0",
     "@vscode/test-electron": "^1.6.2",
     "eslint": "^8.1.0",
     "glob": "^7.1.7",

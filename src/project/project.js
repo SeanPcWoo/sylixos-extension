@@ -386,7 +386,7 @@ class Project {
                         file.local = path.normalize(file.local);
                         /* 判断一下当前文件是否存在，如果不存在则提示用户 */
                         if (!existsSync(file.local)) {
-                            logHelper.logAppendLine(`未发现待 upload 的文�?:[${file.local}], 请检�?:${projectReFile}`);
+                            logHelper.logAppendLine(`未发现待 upload 的文件:[${file.local}], 请检查:${projectReFile}`);
                         }
                         this.uploadFiles.push(file);
                     }
@@ -421,7 +421,7 @@ class Project {
         Object.assign(env, { Output: this.debuglv });
         this.env = env;
 
-        /* 更新 workspace 的环境变量后，再触发一�? mkfile 事件，从而更新相关智能分析的内容 */
+        /* 更新 workspace 的环境变量后，再触发一下 mkfile 事件，从而更新相关智能分析的内容 */
         if (this.initFinish) {
             eventEngine.emit(`${this.name}.makefile.change`);
             /* 更新编译相关关 task 内容 */
