@@ -49,3 +49,15 @@
 
 ### Removed
 - 无
+
+## [Released v0.0.5] - 2021-11-11
+### Added
+- 无；
+
+### Changed
+- 修复了日志 upload 乱码问题；
+- 修复了 windows 下无法获取编译器地址问题；
+- 更改插件对 vscode 的版本要求为 1.60.0，保证 code server 的正常使用。
+
+### Removed
+- 无
