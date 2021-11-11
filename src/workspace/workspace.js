@@ -29,7 +29,27 @@ let workspace = {
         return this.projects.find(project => project.name == projectName && project.path == projectPath);
     },
 
+    projectInitFinishEvent(project){
+        /* 遍历一下，看是否是所有的任务都已经初始化完成 */
+        let allFinish = true;
+        for (let i = 0; i < this.projects.length; i++) {
+            if (!this.projects[i].initFinish) {
+                allFinish = false;
+            }
+        }
+
+        /* 如果都完成了，就更新一下 workspace 的环境变量 */
+        if (allFinish) {
+            let env = {};
+            this.projects.forEach(project => {
+                env[`WORKSPACE_${project.name}`] = project.path;
+            });
+            envMange.addWorkspaceEnv(env);
+        }
+    },
+
     async workspaceProjectInit() {
+        eventEngine.on('project.init.finish', this.projectInitFinishEvent.bind(this));
         if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
             let p = vscode.workspace.workspaceFolders.map(async folder => {
                 await this.importProject(folder.uri);

@@ -80,7 +80,7 @@ class Project {
     /* 有一个工程导入了 */
     async projectImportEvent(project) {
         if (project.name != null) {
-            if (project.name == this.name) {
+            if (project.name == this.name && this.initFinish == false) {
                 /* 导入的是自己 */
                 await this.projectInit();
             } else {
@@ -98,6 +98,8 @@ class Project {
 
         vscode.workspace.getConfiguration('files', project.uri).update('encoding', "gbk");
         this.initFinish = true;
+        /* 告诉别人，我已经初始化完成 */
+        eventEngine.emit('project.init.finish', this);
     }
 
     /* 有一个工程移除了 */
