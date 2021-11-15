@@ -1,5 +1,16 @@
 # Change Log
 
+## [Released v0.0.8] - 2021-11-15
+### Added
+- 无
+
+### Changed
+- 修复在没有选择任何文件情况下，快捷键使用报错问题。
+
+### Removed
+- 无
+
+---
 ## [Released v0.0.7] - 2021-11-15
 ### Added
 - tasks.json 配置文件新增 ‘clear’ 属性，即每次 build 时会删除之前的结果，保持与 RealEvoIDE 效果一致。

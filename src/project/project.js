@@ -12,14 +12,15 @@ const vscode = require('vscode');
 const logHelper = require('../common/logHelper');
 
 function projectValid(projectPath) {
-    return existsSync(path.join(projectPath, '/.reproject')) ? true : false;
+    if (projectPath) {
+        return existsSync(path.join(projectPath, '/.reproject')) ? true : false;
+    } else {
+        return false;
+    }
 }
 
 /* 通过 URI 获取 project 的路径 */
 async function projectGenPath(Uri) {
-    // if (!Uri) {
-    //     return null;
-    // }
     const projectPathUri = await uriHelper.uri2ProjectUri(Uri);
     let proejctPath;
     if (projectPathUri) {
@@ -30,9 +31,6 @@ async function projectGenPath(Uri) {
 
 /* 通过 URI 获取 project 的路径 */
 async function projectGenName(Uri) {
-    // if (!Uri) {
-    //     return null;
-    // }
     const projectPath = await projectGenPath(Uri);
     if (projectPath) {
         return path.basename(projectPath);
