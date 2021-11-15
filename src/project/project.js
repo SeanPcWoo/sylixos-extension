@@ -17,9 +17,9 @@ function projectValid(projectPath) {
 
 /* 通过 URI 获取 project 的路径 */
 async function projectGenPath(Uri) {
-    if (!Uri) {
-        return null;
-    }
+    // if (!Uri) {
+    //     return null;
+    // }
     const projectPathUri = await uriHelper.uri2ProjectUri(Uri);
     let proejctPath;
     if (projectPathUri) {
@@ -30,9 +30,9 @@ async function projectGenPath(Uri) {
 
 /* 通过 URI 获取 project 的路径 */
 async function projectGenName(Uri) {
-    if (!Uri) {
-        return null;
-    }
+    // if (!Uri) {
+    //     return null;
+    // }
     const projectPath = await projectGenPath(Uri);
     if (projectPath) {
         return path.basename(projectPath);
@@ -53,7 +53,7 @@ class Project {
 
         this.uploadDev = {
             devName: '',
-            ip: '',
+            host: '',
             port: '21'
         }
         this.uploadFiles = [];
@@ -303,7 +303,8 @@ class Project {
             },
             presentation: {
                 reveal: "always",
-                panel: "dedicated"
+                panel: "dedicated",
+                clear: true
             },
             problemMatcher: {
                 owner: "cpp",
@@ -331,7 +332,7 @@ class Project {
         } else {
             tasksNew.tasks = [];
         }
-        
+
         if (index != -1) {
             tasksNew.tasks[index] = newTask;
         } else {
@@ -364,8 +365,8 @@ class Project {
         }
 
         this.addNewTasks(tasksNew, `build ${this.name}`, `${this.buildCmd}`);
-        this.addNewTasks(tasksNew, `clean ${this.name}`, `${this.buildCmd}`);
-        this.addNewTasks(tasksNew, `clean&build ${this.name}`, `${this.buildCmd}`);
+        this.addNewTasks(tasksNew, `clean ${this.name}`, `${this.cleanCmd}`);
+        this.addNewTasks(tasksNew, `clean&build ${this.name}`, `${this.cleanCmd};${this.buildCmd}`);
         jsonHelper.writeJson2File(tasksFile, tasksNew);
     }
 
@@ -389,7 +390,7 @@ class Project {
 
         /* 先初始化一下 remote dev 的信息 */
         this.uploadDev.devName = '';
-        this.uploadDev.ip = '';
+        this.uploadDev.host = '';
         this.uploadDev.port = '21';
         this.uploadDev.user = '';
         this.uploadDev.password = '';
@@ -406,7 +407,7 @@ class Project {
                 const devInfo = remotes.find(remote => remote.$.DeviceID == this.uploadDev.devName);
                 if (devInfo) {
                     /* 找到了对应设备配置信息 */
-                    this.uploadDev.ip = devInfo.$.DeviceIp;
+                    this.uploadDev.host = devInfo.$.DeviceIp;
                     this.uploadDev.port = devInfo.$.FTPProt;
                     this.uploadDev.user = devInfo.$.UserName;
                     this.uploadDev.password = devInfo.$.UserPassword;
@@ -414,12 +415,12 @@ class Project {
             }
         }
 
-        if (this.uploadDev.ip == '') {
+        if (this.uploadDev.host == '') {
             /* 说明从工程配置文件和 ACOINFO IDE 的配置中获取信息失败，
                则使用 vscode 用户配置的内容作为 upload 的最终配置项 */
             if (ProjectUpload) {
                 this.uploadDev.devName = ProjectUpload.AHost;
-                this.uploadDev.ip = ProjectUpload.AIp;
+                this.uploadDev.host = ProjectUpload.AIp;
                 this.uploadDev.port = ProjectUpload.BPort;
                 this.uploadDev.user = ProjectUpload.CUser;
                 this.uploadDev.password = ProjectUpload.DPassword;
@@ -463,7 +464,7 @@ class Project {
         if (updateConfiguration) {
             let p = [];
             p.push(ProjectUpload.update("AHost", this.uploadDev.devName, vscode.ConfigurationTarget.WorkspaceFolder));
-            p.push(ProjectUpload.update("AIp", this.uploadDev.ip, vscode.ConfigurationTarget.WorkspaceFolder));
+            p.push(ProjectUpload.update("AIp", this.uploadDev.host, vscode.ConfigurationTarget.WorkspaceFolder));
             p.push(ProjectUpload.update("BPort", this.uploadDev.port, vscode.ConfigurationTarget.WorkspaceFolder));
             p.push(ProjectUpload.update("CUser", this.uploadDev.user, vscode.ConfigurationTarget.WorkspaceFolder));
             p.push(ProjectUpload.update("DPassword", this.uploadDev.password, vscode.ConfigurationTarget.WorkspaceFolder));

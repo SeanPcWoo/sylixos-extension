@@ -1,5 +1,16 @@
 # Change Log
 
+## [Released v0.0.7] - 2021-11-15
+### Added
+- tasks.json 配置文件新增 ‘clear’ 属性，即每次 build 时会删除之前的结果，保持与 RealEvoIDE 效果一致。
+
+### Changed
+- 修复 build 和 upload 快捷键无法使用问题;
+- 修复 upload 获取地址失败问题;
+
+### Removed
+- 无
+
 ---
 ## [Released v0.0.6] - 2021-11-11
 ### Added

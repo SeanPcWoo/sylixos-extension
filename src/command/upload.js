@@ -33,6 +33,10 @@ async function upload (uri) {
         }).then(() => {
             statusBar.infobarshow(`[${projectName}]完成部署`);
             statusBar.handlebarhide();
+        }, (err) =>{
+            channel.append(`[${projectName}]部署失败: ` + err);
+            statusBar.infobarshow(`[${projectName}]部署失败`);
+            statusBar.handlebarhide();
         });
     } else {
         vscode.window.showErrorMessage("获取工程失败");

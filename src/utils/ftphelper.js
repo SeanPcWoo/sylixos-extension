@@ -50,8 +50,12 @@ const ftpHelper = {
         return 'success!';
     },
 
-    async ftpUploadAllFiles(remotedev, files, startCb = null, afterCb = null, statusCb = null) {
+    ftpUploadAllFiles(remotedev, files, startCb = null, afterCb = null, statusCb = null) {
         return new Promise((resolve, reject) => {
+            if (files.length == 0) {
+                reject('没有设置待部署文件');
+                return;
+            }
             if (files[loopnum]) {
                 (startCb == null) ? null : startCb(files[loopnum]); 
                 /* 开始传输一个文件 */
@@ -74,7 +78,7 @@ const ftpHelper = {
                     } else {
                         loopnum = 0;
                         reject();
-                    }         
+                    }
                 });
             } else {
                 loopnum = 0;
@@ -85,7 +89,7 @@ const ftpHelper = {
     
 
     /* 停止所有 ftp 传输 */
-    async ftpUploadStopAll(){
+    ftpUploadStopAll(){
         /* 将 loop 设置为最大的值，这样等到当前传输完成之后，之后的内容就会全部停止 */
         loopnum = MAX_LOOP_COUNT; 
     }
