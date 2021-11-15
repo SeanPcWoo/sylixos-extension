@@ -3,7 +3,7 @@
   "displayName": "sylixos",
   "description": "the sylixos extension in vscode",
   "publisher": "wupengcheng",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "repository": {"url": "https://github.com/SeanPcWoo/sylixos-extension.git"},
   "icon": "src/img/logo.jpg",
   "engines": {
@@ -34,6 +34,10 @@
 				"command": "vscode-js-sylixos.uploadpro",
 				"title": "upload SylixOS 工程"
 			},
+      {
+				"command": "vscode-js-sylixos.setpro",
+				"title": "SylixOS 工程设置"
+			},
 			{
 				"command": "vscode-js-sylixos.showlog",
 				"title": "显示 SylixOS 插件日志"
@@ -47,16 +51,20 @@
 				},
 				{
 					"command": "vscode-js-sylixos.cleanpro",
-					"group": "navigation@2"
+					"group": "navigation@1"
 				},
 				{
 					"command": "vscode-js-sylixos.cleanbuildpro",
-					"group": "navigation@3"
+					"group": "navigation@2"
 				},
 				{
 					"command": "vscode-js-sylixos.uploadpro",
-					"group": "navigation@3"
-				}
+					"group": "navigation@2"
+				},
+        {
+          "command": "vscode-js-sylixos.setpro",
+          "group": "navigation@3"
+        }
 			]
 		},
 		"keybindings": [

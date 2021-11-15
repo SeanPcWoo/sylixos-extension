@@ -11,6 +11,7 @@ async function activate(context) {
 	require("./src/command/build")(context);
 	require("./src/command/upload")(context);
 	require("./src/command/log")(context);
+	require("./src/command/set")(context);
 
 	logHelper.logAppendLine('SylixOS 插件激活成功!');
 	logHelper.logAppendLine('SylixOS 插件正在进行 workspace 初始化!');

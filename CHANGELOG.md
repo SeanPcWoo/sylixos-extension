@@ -1,5 +1,16 @@
 # Change Log
 
+## [Released v0.0.9] - 2021-11-15
+### Added
+- 右击增加‘SylixOS 工程设置’快捷方式。
+
+### Changed
+- 临时去除 FTP 一键部署终止功能。
+
+### Removed
+- 无
+
+---
 ## [Released v0.0.8] - 2021-11-15
 ### Added
 - 无

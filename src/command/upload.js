@@ -20,7 +20,6 @@ async function upload (uri) {
 
         channel.clear();
         channel.show();
-        statusBar.handlebarshow('停止传输');
 
         ftpHelper.ftpUploadAllFiles(project.uploadDev, project.uploadFiles, file => {
             channel.append(`部署: ${file.local}\t`);

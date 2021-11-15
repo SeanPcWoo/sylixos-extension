@@ -89,9 +89,14 @@ const ftpHelper = {
     
 
     /* 停止所有 ftp 传输 */
-    ftpUploadStopAll(){
+    async ftpUploadStopAll(){
         /* 将 loop 设置为最大的值，这样等到当前传输完成之后，之后的内容就会全部停止 */
         loopnum = MAX_LOOP_COUNT; 
+        try {
+            await this.ftpClient.end();
+        } catch (err){
+            throw new Error('disconnect failed!');
+        }
     }
 }
 
