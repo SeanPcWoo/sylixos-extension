@@ -1,5 +1,16 @@
 # Change Log
 
+## [Released v0.0.10] - 2021-11-15
+### Added
+- 无
+
+### Changed
+- 修复某些工程无法被成功识别加载的情况;
+
+### Removed
+- 无
+
+---
 ## [Released v0.0.9] - 2021-11-15
 ### Added
 - 右击增加‘SylixOS 工程设置’快捷方式。

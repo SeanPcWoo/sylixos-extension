@@ -301,6 +301,7 @@ class Project {
             },
             presentation: {
                 reveal: "always",
+                echo:true,
                 panel: "dedicated",
                 clear: true
             },
@@ -427,7 +428,9 @@ class Project {
 
         /* 获取 ftp files 信息和 ftp 的 files 根据就是工程的 reproject 文件 */
         this.uploadFiles = [];
-        if (ReFileContent && ReFileContent.SylixOSSetting.UploadPath.PairItem) {
+        if (ReFileContent && ReFileContent.SylixOSSetting
+            && ReFileContent.SylixOSSetting.UploadPath
+            && ReFileContent.SylixOSSetting.UploadPath.PairItem) {
             let uploadFiles = ReFileContent.SylixOSSetting.UploadPath.PairItem;
             if (uploadFiles.length == undefined) {
                 /* 只有一个元素 */

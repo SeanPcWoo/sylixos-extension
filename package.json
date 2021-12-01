@@ -3,7 +3,7 @@
   "displayName": "sylixos",
   "description": "the sylixos extension in vscode",
   "publisher": "wupengcheng",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "repository": {"url": "https://github.com/SeanPcWoo/sylixos-extension.git"},
   "icon": "src/img/logo.jpg",
   "engines": {

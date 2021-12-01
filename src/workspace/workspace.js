@@ -19,8 +19,10 @@ let workspace = {
     },
 
     async removeProject(projectName){
-        if (projectName) {
+        const index = this.projects.findIndex(project => project.name == projectName);
+        if (index != -1) {
             eventEngine.emit('project.remove', projectName);
+            this.projects.splice(index, 1);
         }
         return true;
     },
