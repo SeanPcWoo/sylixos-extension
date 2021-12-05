@@ -48,6 +48,7 @@ class Project {
         this.type = 'unknown';
         this.debuglv = '';
         this.env = {};
+        this.compilerPath = null;
 
         this.uploadDev = {
             devName: '',
@@ -187,6 +188,9 @@ class Project {
         let toolChainPrefix = await simpleMakefile.getArgumentFromMakefiles(baseProConfigMk, "TOOLCHAIN_PREFIX");
         if (toolChainPrefix.length > 0) {
             c_cpp_propeities.env.SylixOS_CompilerPath = toolChainHelper.toolChainGet(toolChainPrefix[0]);
+            /* 这里将编译工具链地址保存在 project 里，方便其他需要编译器操作时，快速获取编译器信息 */
+            this.compilerPath = c_cpp_propeities.env.SylixOS_CompilerPath;
+
             /* TODO: 关于 intelliSenseMode 的设置，这里暂时这么设置，后续理解清楚后可以更新这部分配置 */
             if (toolChainPrefix[0].indexOf('64') != -1) {
                 c_cpp_propeities.configurations[0].intelliSenseMode = "gcc-x64";

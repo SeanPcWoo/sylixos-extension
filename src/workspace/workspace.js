@@ -3,6 +3,7 @@ const vscode = require('vscode');
 const  {projectGenPath, projectGenName, Project} = require('../project/project');
 const {eventEngine, eventMange} = require('../workspace/eventEngine');
 const envMange = require('./envmange');
+const path = require('path');
 
 let workspace = {
     projects:[],
@@ -29,6 +30,17 @@ let workspace = {
 
     getProject(projectName, projectPath){
         return this.projects.find(project => project.name == projectName && project.path == projectPath);
+    },
+
+    /* 通过工程中的一个文件路径获取工程结点 */
+    getProjectByFile(filePath){
+        if (!filePath) {
+            return null;
+        }
+        return this.projects.find(project => {
+            const relative = path.relative(project.path, filePath);
+            return relative && !relative.startsWith('..') && !path.isAbsolute(relative);
+        });
     },
 
     projectInitFinishEvent(project){

@@ -9,6 +9,28 @@ const toolChainHelper = {
     compileRootPath: null,
     realEvoIdePath: null,
 
+    /* 根据编译器前缀，获取指定架构的 addr2line  */
+    addr2LinePathGet(archPrefix){
+        if (this.toolChainPath.length == 0) {
+            return;
+        }
+
+        let addr2LinePath = this.toolChainPath.find(toolChain => {
+            return toolChain.indexOf(archPrefix.split("-")[0]) != -1;
+        });
+
+        if (addr2LinePath) {
+            if (os.type().indexOf('Windows') != -1) {
+                addr2LinePath = path.join(addr2LinePath, "/" + archPrefix + "addr2line.exe");
+            } else if (os.type().indexOf('Linux') != -1) {
+                addr2LinePath = path.join(addr2LinePath, "/" + archPrefix + "addr2line");
+            }
+            return addr2LinePath;
+        }
+
+        return null;
+    },
+
     /* 根据编译器前缀，获取指定架构的编译工具链地址 */
     toolChainGet(toolChainPrefix) {
         if (this.toolChainPath.length == 0) {
