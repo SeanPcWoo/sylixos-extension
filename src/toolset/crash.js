@@ -63,6 +63,7 @@ async function addFileToCrashTool(uri) {
             fileTreeItem.filePath = uri.fsPath;
             fileTreeItem.functionItems = [];
             crashToolProvider.fileTreeItems.push(fileTreeItem);
+            console.log(crashToolProvider.fileTreeItems);
             crashToolProvider.refresh();
             return;
         }
@@ -175,10 +176,12 @@ function crashToolRemove() {
 }
 
 const crashToolProvider = {
+    extensionContext:null,
     fileTreeItems: [],
     onDidChangeTreeData: _onDidChangeTreeData.event,
 
     refresh() {
+        this.extensionContext.workspaceState.update('fileTreeItems', (this.fileTreeItems));
         _onDidChangeTreeData.fire();
     },
 
@@ -202,6 +205,19 @@ module.exports = function (context) {
     let SetBaseAddrDisposable = vscode.commands.registerCommand('vscode-js-sylixos.crashToolSetBaseAddr', crashToolSetBaseAddr);
     let openAnaSpecFileDisposable = vscode.commands.registerCommand('vscode-js-sylixos.openAnaSpecFile', openAnaSpecFile);
 
+    /* 从 workspace 的存储控制中获取保存的信息 */
+    crashToolProvider.extensionContext = context;
+    const fileTreeItems = context.workspaceState.get('fileTreeItems', []);
+    /* NOTICE: 这里每一个 item 的 iconPath 需要重新赋值一次，否则报错，暂不清楚原因 */
+    fileTreeItems.forEach(item => {
+        item.iconPath = vscode.ThemeIcon.Folder;
+        if (item.functionItems && item.functionItems.length > 0) {
+            item.functionItems.forEach(functionItem => functionItem.iconPath = vscode.ThemeIcon.File);
+        }
+    });
+    crashToolProvider.fileTreeItems = fileTreeItems;
+
+    /* 注册 crash tool 的 Provider */
     vscode.window.registerTreeDataProvider(
         'SylixOSCrashTool',
         crashToolProvider
