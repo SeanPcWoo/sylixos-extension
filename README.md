@@ -105,3 +105,8 @@ which aarch64-sylixos-elf-gcc
 当工程导入成功后，会自动解析出当前工程的 upload 相关属性，如果之前在 **RealEvo-IDE** 中已经设置过，那么此时可以直接右击工程进行一键部署；如果没有设置过，那么也可以向上述设置自定义编译命令一样，进行 upload 的属性配置；
 如果当前导入进 vscode 的工程文件夹是  RealEvoIDE 的 workspace 环境下的，那么当前工程的 upload 配置内容可以做到 vscode 与  **RealEvo-IDE** 无缝衔接，也就是在 vscode 里配置了的 upload 内容，下次在  **RealEvo-IDE** 里再次打开这个工程时，同样适用，此时可以在  **RealEvo-IDE** 直接一键部署，不需要二次设置。
 
+
+## SylixOS 开发工具集
+SylixOS 开发插件还提供了一些开发工具集合，其内容如下：
+
+- [Crash 分析工具](http://blog.wupc.xyz:8181/index.php/archives/12/#cl-11)

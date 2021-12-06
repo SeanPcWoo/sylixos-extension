@@ -1,5 +1,16 @@
 # Change Log
 
+## [Released v0.0.11] - 2021-11-15
+### Added
+- 增加 crash 分析工具，支持 crash 信息快速查看，保存等功能;
+
+### Changed
+- 修改了 SylixOS 插件日志 focus 的逻辑，防止启动时，不断的 focus 到“输出”窗口，影响操作;
+
+### Removed
+- 无
+
+---
 ## [Released v0.0.10] - 2021-11-15
 ### Added
 - 无
