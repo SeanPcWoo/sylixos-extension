@@ -56,17 +56,12 @@ async function addFileToCrashTool(uri) {
 
             let fileTreeItem = new vscode.TreeItem(path.basename(uri.fsPath), vscode.TreeItemCollapsibleState.Expanded);
             fileTreeItem.contextValue = "execfile";
-            fileTreeItem.description = "请先设置运行基地址";
+            fileTreeItem.resourceUri = vscode.Uri.file(uri.fsPath);
+            fileTreeItem.description = "基地址未设置";
             fileTreeItem.iconPath = vscode.ThemeIcon.Folder;
             fileTreeItem.addr2linePath = addr2linePath;
             fileTreeItem.filePath = uri.fsPath;
             fileTreeItem.functionItems = [];
-            // fileTreeItem.command = {
-            //     title:"setBaseAddr",
-            //     command:"vscode-js-sylixos.crashToolSetBaseAddr",
-            //     tooltip:'设置运行基地址',
-            //     arguments:fileTreeItem
-            // },
             crashToolProvider.fileTreeItems.push(fileTreeItem);
             crashToolProvider.refresh();
             return;
@@ -174,6 +169,11 @@ function openAnaSpecFile(result) {
     });
 }
 
+function crashToolRemove() {
+    crashToolProvider.fileTreeItems = [];
+    crashToolProvider.refresh();
+}
+
 const crashToolProvider = {
     fileTreeItems: [],
     onDidChangeTreeData: _onDidChangeTreeData.event,
@@ -197,6 +197,7 @@ const crashToolProvider = {
 module.exports = function (context) {
     let addFile2ToolDisposable = vscode.commands.registerCommand('vscode-js-sylixos.addToCrashTool', addFileToCrashTool);
     let crashToolAddFileDisposable = vscode.commands.registerCommand('vscode-js-sylixos.crashToolAddFile', crashToolAddFile);
+    let crashToolRemoveDisposable = vscode.commands.registerCommand('vscode-js-sylixos.crashToolRemove', crashToolRemove);
     let anaDisposable = vscode.commands.registerCommand('vscode-js-sylixos.crashToolAnaly', analyseAddr);
     let SetBaseAddrDisposable = vscode.commands.registerCommand('vscode-js-sylixos.crashToolSetBaseAddr', crashToolSetBaseAddr);
     let openAnaSpecFileDisposable = vscode.commands.registerCommand('vscode-js-sylixos.openAnaSpecFile', openAnaSpecFile);
@@ -208,6 +209,7 @@ module.exports = function (context) {
 
     context.subscriptions.push(addFile2ToolDisposable);
     context.subscriptions.push(crashToolAddFileDisposable);
+    context.subscriptions.push(crashToolRemoveDisposable);
     context.subscriptions.push(anaDisposable);
     context.subscriptions.push(SetBaseAddrDisposable);
     context.subscriptions.push(openAnaSpecFileDisposable);

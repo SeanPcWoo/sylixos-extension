@@ -10,7 +10,7 @@ const logHelper = {
         this.channel = vscode.window.createOutputChannel(channelName);
     },
 
-    logAppend(content, show = true, time = false){
+    logAppend(content, show = false, time = false){
         if (time) {
             this.channel.append(`[${moment(new Date().getTime()).format('MM-DD HH:mm:ss')}] ` + content);
         } else {
@@ -22,7 +22,7 @@ const logHelper = {
         }
     },
 
-    logAppendLine(content, show = true){
+    logAppendLine(content, show = false){
         this.channel.appendLine(`[${moment(new Date().getTime()).format('MM-DD HH:mm:ss')}] ` + content);
         if (show) {
             this.logShow();

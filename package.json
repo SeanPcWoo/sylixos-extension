@@ -54,15 +54,23 @@
       },
       {
         "command": "vscode-js-sylixos.crashToolAddFile",
-        "title": "添加文件"
+        "title": "添加文件",
+        "icon":"$(file-add)"
+      },
+      {
+        "command": "vscode-js-sylixos.crashToolRemove",
+        "title": "清空",
+        "icon":"$(clear-all)"
       },
       {
         "command": "vscode-js-sylixos.crashToolSetBaseAddr",
-        "title": "基地址"
+        "title": "基地址",
+        "icon":"$(file-code)"
       },
       {
         "command": "vscode-js-sylixos.crashToolAnaly",
-        "title": "分析"
+        "title": "分析",
+        "icon":"$(gather)"
       },
       {
         "command": "vscode-js-sylixos.openAnaSpecFile",
@@ -98,6 +106,11 @@
       ],
       "view/title": [
         {
+          "command": "vscode-js-sylixos.crashToolRemove",
+          "when": "view == SylixOSCrashTool",
+          "group": "navigation"
+        },
+        {
           "command": "vscode-js-sylixos.crashToolAddFile",
           "when": "view == SylixOSCrashTool",
           "group": "navigation"
@@ -130,7 +143,7 @@
       "explorer": [
         {
           "id": "SylixOSCrashTool",
-          "name": "SylixOS Crash 工具"
+          "name": "SylixOS Crash 分析工具"
         }
       ]
     },

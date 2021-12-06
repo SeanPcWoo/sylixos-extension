@@ -96,10 +96,10 @@ async function activate(context) {
 	require("./src/command/log")(context);
 	require("./src/command/set")(context);
 
-	logHelper.logAppendLine('SylixOS 插件激活成功!');
-	logHelper.logAppendLine('SylixOS 插件正在进行 workspace 初始化!');
+	logHelper.logAppendLine('SylixOS 插件激活成功!', true);
+	logHelper.logAppendLine('SylixOS 插件正在进行 workspace 初始化!', true);
 	await worksapce.worksapceInit();
-	logHelper.logAppend(`当前 workspace 发现如下 SylixOS 工程:`, true, true);
+	logHelper.logAppend(`当前 workspace 发现如下 SylixOS 工程:`, false, true);
 	for (let i = 0; i < worksapce.projects.length; i++) {
 		logHelper.logAppend(`[${worksapce.projects[i].name}] `);
 	}
