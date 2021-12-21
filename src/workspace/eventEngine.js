@@ -17,6 +17,12 @@ const eventMange = {
                 eventEngine.emit('linux.compilepath.change');
             }
         }
+
+        /* workspace 相关的 configuration 发生变化 */
+        if (event.affectsConfiguration('WorkspaceSetting')) {
+            eventEngine.emit('workspace.configuration.tftpserver');
+        }
+
         if (vscode.workspace.workspaceFolders !== undefined) {
             vscode.workspace.workspaceFolders.forEach(async (folder) => {
                 /* 工程设置属性发生的变化 */
