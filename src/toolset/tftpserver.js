@@ -58,7 +58,9 @@ async function tftpServerSet() {
             tftpHelper.ServerStop();
             break;
         case "Config":
-            console.log('chose Config');
+            await vscode.commands.executeCommand("workbench.action.openWorkspaceSettings", {
+                query:"WorkspaceSetting"
+            });
             break;
         default:
             break;
@@ -76,7 +78,7 @@ function tftpServerStatusUpdate () {
     }
     
     if (tftpHelper.ServerGetPort() != WorkspaceSetting.tftpPort) {
-        WorkspaceSetting.update('tftpPort', tftpHelper.ServerGetPort());
+        WorkspaceSetting.update('tftpPort', Number(tftpHelper.ServerGetPort()));
     }
 }
 

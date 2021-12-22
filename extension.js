@@ -16,14 +16,19 @@ async function activate(context) {
 	require("./src/command/set")(context);
 
 	logHelper.logAppendLine('SylixOS 插件激活成功!', true);
-	logHelper.logAppendLine('SylixOS 插件正在进行 workspace 初始化!', true);
+	logHelper.logAppendLine('SylixOS 插件正在检测当前 workspace !', true);
 	await worksapce.worksapceInit();
-	logHelper.logAppend(`当前 workspace 发现如下 SylixOS 工程:`, false, true);
-	for (let i = 0; i < worksapce.projects.length; i++) {
-		logHelper.logAppend(`[${worksapce.projects[i].name}] `);
+	if (worksapce.projects.length) {
+		logHelper.logAppend(`当前 workspace 发现如下 SylixOS 工程:`, false, true);
+		for (let i = 0; i < worksapce.projects.length; i++) {
+			logHelper.logAppend(`[${worksapce.projects[i].name}] `);
+		}
+		logHelper.logAppend('\n');
+	} else {
+		logHelper.logAppend('未发现 SylixOS 相关工程\n');
 	}
-	logHelper.logAppend('\n');
-	logHelper.logAppendLine('SylixOS 插件初始化，欢迎使用!');
+
+	logHelper.logAppendLine('SylixOS 插件检测完成，欢迎使用!');
 }
 
 function deactivate() { }

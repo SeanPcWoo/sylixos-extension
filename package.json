@@ -3,7 +3,7 @@
   "displayName": "sylixos",
   "description": "the sylixos extension in vscode",
   "publisher": "wupengcheng",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "repository": {
     "url": "https://github.com/SeanPcWoo/sylixos-extension.git"
   },
@@ -78,7 +78,7 @@
       },
       {
         "command": "vscode-js-sylixos.addToTftpServer",
-        "title": "加入 TFTP 服务器"
+        "title": "加入 SylixOS TFTP 服务器"
       },
       {
         "command": "vscode-js-sylixos.tftpServerSet",
@@ -113,7 +113,7 @@
         },
         {
           "command": "vscode-js-sylixos.addToTftpServer",
-          "group": "navigation@3"
+          "group": "navigation@4"
         }
       ],
       "view/title": [
@@ -243,7 +243,7 @@
           "WorkspaceSetting.tftpContent": {
             "type": "array",
             "scope": "window",
-            "description": "设置 TFTP 服务器管理的文件或文件夹\n(注意:存在多个条目符合时，只会选择第一个符合的条目)",
+            "description": "设置 TFTP 服务器管理的文件或文件夹\n注意:\n1.存在多个条目符合时，只会选择第一个符合的条目;\n2.文件夹路径不支持递归",
             "items": {
               "type": "string"
             },

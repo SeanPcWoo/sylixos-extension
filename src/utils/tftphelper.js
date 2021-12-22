@@ -82,6 +82,7 @@ const tftpHelper = {
             this.server = null;
             this.flag = 'stop';
             eventEngine.emit('tftpserver.error', `${err.stack}`);
+            eventEngine.emit('tftpserver.update');
         });
 
         this.server.bind(port);

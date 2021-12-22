@@ -110,3 +110,4 @@ which aarch64-sylixos-elf-gcc
 SylixOS 开发插件还提供了一些开发工具集合，其内容如下：
 
 - [Crash 分析工具](http://blog.wupc.xyz:8181/index.php/archives/12/#cl-11)
+- [TFTP 服务器工具](http://blog.wupc.xyz:8181/index.php/archives/12/#cl-11)
