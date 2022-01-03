@@ -435,28 +435,28 @@ class Project {
         if (ReFileContent && ReFileContent.SylixOSSetting
             && ReFileContent.SylixOSSetting.UploadPath
             && ReFileContent.SylixOSSetting.UploadPath.PairItem) {
-            let uploadFiles = ReFileContent.SylixOSSetting.UploadPath.PairItem;
-            if (uploadFiles.length == undefined) {
+            let PairItem = ReFileContent.SylixOSSetting.UploadPath.PairItem;
+            if (PairItem.length == undefined) {
                 /* 只有一个元素 */
-                uploadFiles = [uploadFiles];
-                uploadFiles.forEach(fileinfo => {
-                    if (fileinfo.$.key && fileinfo.$.value) {
-                        let file = {
-                            local: fileinfo.$.key,
-                            remote: fileinfo.$.value,
-                        };
-                        /* 替换本工程的 workspace 的  output */
-                        file.local = file.local.replace(`$(WORKSPACE_${this.name})`, this.path);
-                        file.local = file.local.replace(`$(Output)`, this.debuglv);
-                        file.local = path.normalize(file.local);
-                        /* 判断一下当前文件是否存在，如果不存在则提示用户 */
-                        if (!existsSync(file.local)) {
-                            logHelper.logAppendLine(`未发现待 upload 的文件:[${file.local}], 请检查:${projectReFile}`);
-                        }
-                        this.uploadFiles.push(file);
-                    }
-                });
+                PairItem = [PairItem];
             }
+            PairItem.forEach(fileinfo => {
+                if (fileinfo.$.key && fileinfo.$.value) {
+                    let file = {
+                        local: fileinfo.$.key,
+                        remote: fileinfo.$.value,
+                    };
+                    /* 替换本工程的 workspace 的  output */
+                    file.local = file.local.replace(`$(WORKSPACE_${this.name})`, this.path);
+                    file.local = file.local.replace(`$(Output)`, this.debuglv);
+                    file.local = path.normalize(file.local);
+                    /* 判断一下当前文件是否存在，如果不存在则提示用户 */
+                    if (!existsSync(file.local)) {
+                        logHelper.logAppendLine(`未发现待 upload 的文件:[${file.local}], 请检查:${projectReFile}`);
+                    }
+                    this.uploadFiles.push(file);
+                }
+            });
         }
 
         /* 将当前的信息展示在 configuration  */
