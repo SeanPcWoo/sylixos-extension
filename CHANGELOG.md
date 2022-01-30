@@ -1,5 +1,15 @@
 # Change Log
 
+## [Released v0.0.13] - 2022-1-30
+### Added
+- 无;
+
+### Changed
+- 修复 upload 多文件时，失败的情况;
+
+### Removed
+- 无
+
 ## [Released v0.0.12] - 2021-12-22
 ### Added
 - 增加 TFTP 服务器工具，支持快速开启、关闭、设置工作内容等功能;
