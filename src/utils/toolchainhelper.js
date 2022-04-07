@@ -38,7 +38,13 @@ const toolChainHelper = {
         }
 
         let tooChainPath = this.toolChainPath.find(toolChain => {
-            return toolChain.indexOf(toolChainPrefix.split("-")[0]) != -1;
+            let index = toolChain.indexOf(toolChainPrefix.split("-")[0]);
+
+            if (index == -1) {
+                return false;
+            }
+            return toolChain.substring(index, toolChain.length).split("-")[0] == toolChainPrefix.split("-")[0] &&
+                toolChain.substring(index, toolChain.length).split("-")[1]== toolChainPrefix.split("-")[1]
         });
 
         if (tooChainPath) {

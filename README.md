@@ -18,6 +18,8 @@
 - 支持获取当前工作机器上 RealEvoIDE 之前使用过的部分 'WORKSPACE_XXX' 环境变量；
 - VsCode workspace 下的工程也支持类似 RealEvoIDE 的 'WORKSPACE_XXX' 环境变量；
 - 自动设置了符合 RealEvoIDE 使用习惯的相关内容: SylixOS 工程文件默认 GBK 编码、双击目录展开，单机选中，[alt + D] 快捷按键一键部署等，如不需要，可自行修改；
+- 支持 tftp server ，使用简洁方便；
+- 支持 crash 快速分析，定位问题更精准!
 
 
 
@@ -68,7 +70,10 @@ which aarch64-sylixos-elf-gcc
 ## 导入/移除工程
 
 
-导入/移除 SylixOS 工程在 vscode 下就是将文件夹放入/移除 vscode 的工作环境，vscode 与 **RealEvo-IDE**的整体布局结构存在一些差异，具体内容请参考 vscode 官方。因此这里建议在 vscode 的工作区环境(workspace)中使用 vscode sylixos 插件，类似于 **RealEvo-IDE**的workspace 使用逻辑。
+导入/移除 SylixOS 工程在 vscode 下就是将文件夹放入/移除 vscode 的工作环境，vscode 与 **RealEvo-IDE**的整体布局结构存在一些差异，具体内容请参考 vscode 官方。需要注意的是，只能在 vscode 的工作区环境(workspace)中使用 vscode sylixos 插件，类似于 **RealEvo-IDE**的workspace 使用逻辑。
+
+简易的导入工程的方法：打开一个新的界面 -> 点击[文件] -> 选择[将文件夹添加到工作区] -> 导入后，保存当前工作区即可。
+> 注意：导入的 SylixOS 工程文件夹必须是工程的根文件夹，否则检测工程时会失败！
 
 
 当导入工程到 vscode 的 workspace 下后，sylixos 插件会开始对导入的工程自动进行分析，并生成相关的配置内容，其主要分析的内容如下：
@@ -109,5 +114,5 @@ which aarch64-sylixos-elf-gcc
 ## SylixOS 开发工具集
 SylixOS 开发插件还提供了一些开发工具集合，其内容如下：
 
-- [Crash 分析工具](http://blog.wupc.xyz:8181/index.php/archives/12/#cl-11)
-- [TFTP 服务器工具](http://blog.wupc.xyz:8181/index.php/archives/12/#cl-11)
+- [Crash 分析工具](https://zhuanlan.zhihu.com/p/441908062)
+- [TFTP 服务器工具](https://zhuanlan.zhihu.com/p/463147237)

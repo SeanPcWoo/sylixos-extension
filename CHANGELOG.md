@@ -1,4 +1,13 @@
 # Change Log
+## [Released v0.0.14] - 2022-4-7
+### Added
+- 无;
+
+### Changed
+- 修复某些架构识别编译工具链地址错误的情况;
+
+### Removed
+- 无
 
 ## [Released v0.0.13] - 2022-1-30
 ### Added
